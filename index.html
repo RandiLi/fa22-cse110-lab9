@@ -87,6 +87,14 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "437cc400ecc3496e96b95bed132a859a"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                          
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -95,13 +103,107 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try {
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      } catch(err) {  // Catch bad inputs, logs and shows user
+        output.innerHTML = "Bad Input";
+        throw new InputError("Bad Input");
+      }
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    // Start your code here
-    // You may move this JS to another file if you wish
+                        
+
+    // Global error
+    window.onerror = (event) => {
+      console.log("Sadly an error happened my friend");
+    };
+
+    // InputError for Error Calculator, triggers when there is an invalid input
+    class InputError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "InputError";
+      }
+    }
+
+    const cons = document.querySelectorAll('button');
+    cons[1].addEventListener('click', (event) => {
+      console.log("Console Log Demo");
+    });
+
+    cons[2].addEventListener('click', (event) => {
+      console.error("Console Error Demo");
+    });
+
+    cons[3].addEventListener('click', (event) => {
+      console.count("Count Button");
+    });
+
+    cons[4].addEventListener('click', (event) => {
+      console.warn("Console Warn Button");
+    });
+
+    cons[5].addEventListener('click', (event) => {
+      console.assert(2==3, "The number does not equal 3");
+    })
+
+    cons[6].addEventListener('click', (event) => {
+      console.clear();
+    });
+
+    cons[7].addEventListener('click', (event) => {
+      console.dir(cons[7]);
+    });
+
+    cons[8].addEventListener('click', (event) => {
+      console.dirxml(cons[8]);
+    });
+
+    cons[9].addEventListener('click', (event) => {
+      console.group("console.group");
+    });
+
+    cons[10].addEventListener('click', (event) => {
+      console.groupEnd("console.group");
+    });
+
+    cons[11].addEventListener('click', (event) => {
+      console.table([
+        {
+          name: "Software Engineering",
+          num: 110,
+        },
+        {
+          name: "Programming Languages: Principles and Paradigms",
+          num: 130,
+        },
+        {
+          name: "Advanced Software Engineering",
+          num: 112,
+        }
+      ]);
+    });
+
+    cons[12].addEventListener('click', (event) => {
+      console.time("Timer Button");
+    });
+
+    cons[13].addEventListener('click', (event) => {
+      console.timeEnd("Timer Button");
+    });
+
+    const deep = () => { deeper(); };
+    const deeper = () => { deepest(); };
+    const deepest = () => { console.trace(); };
+    cons[14].addEventListener('click', (event) => {
+      deep();
+    });
+
+    cons[15].addEventListener('click', (event) => {
+      boom();
+    });
   </script>
 </body>
 
